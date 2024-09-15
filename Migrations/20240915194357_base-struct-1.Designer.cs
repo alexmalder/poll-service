@@ -3,6 +3,7 @@ using System;
 using DotNetCrudWebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotNetCrudWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240915194357_base-struct-1")]
+    partial class basestruct1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,44 +46,7 @@ namespace DotNetCrudWebApi.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Answers");
-                });
-
-            modelBuilder.Entity("DotNetCrudWebApi.Models.Poll", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Polls");
-                });
-
-            modelBuilder.Entity("DotNetCrudWebApi.Models.PollInstance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PollId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PollId");
-
-                    b.ToTable("PollInstances");
+                    b.ToTable("Answer");
                 });
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Question", b =>
@@ -111,22 +77,6 @@ namespace DotNetCrudWebApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("DotNetCrudWebApi.Models.PollInstance", b =>
-                {
-                    b.HasOne("DotNetCrudWebApi.Models.Poll", "Poll")
-                        .WithMany("PollInstances")
-                        .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Poll");
-                });
-
-            modelBuilder.Entity("DotNetCrudWebApi.Models.Poll", b =>
-                {
-                    b.Navigation("PollInstances");
                 });
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Question", b =>

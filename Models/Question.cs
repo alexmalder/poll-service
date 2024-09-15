@@ -8,5 +8,6 @@ namespace DotNetCrudWebApi.Models
         public string? Title { get; set; }
         public DateTime CreationDate { get; set; }
         public ICollection<Answer> Answers { get; } = new List<Answer>();
+        public required Poll Poll { get; set; }
     }
 }
