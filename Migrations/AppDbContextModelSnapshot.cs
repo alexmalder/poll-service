@@ -22,7 +22,7 @@ namespace DotNetCrudWebApi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DotNetCrudWebApi.Movies.MovieModel", b =>
+            modelBuilder.Entity("DotNetCrudWebApi.Models.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,10 +30,7 @@ namespace DotNetCrudWebApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Genre")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ReleaseDate")
+                    b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
@@ -41,7 +38,7 @@ namespace DotNetCrudWebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Questions");
                 });
 #pragma warning restore 612, 618
         }

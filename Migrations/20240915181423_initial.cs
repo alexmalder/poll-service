@@ -13,18 +13,17 @@ namespace DotNetCrudWebApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Movies",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: true),
-                    Genre = table.Column<string>(type: "text", nullable: true),
-                    ReleaseDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movies", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                 });
         }
 
@@ -32,7 +31,7 @@ namespace DotNetCrudWebApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "Questions");
         }
     }
 }
