@@ -94,10 +94,15 @@ namespace DotNetCrudWebApi.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("PollId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PollId");
 
                     b.ToTable("Questions");
                 });
@@ -124,9 +129,18 @@ namespace DotNetCrudWebApi.Migrations
                     b.Navigation("Poll");
                 });
 
+            modelBuilder.Entity("DotNetCrudWebApi.Models.Question", b =>
+                {
+                    b.HasOne("DotNetCrudWebApi.Models.Poll", null)
+                        .WithMany("Questions")
+                        .HasForeignKey("PollId");
+                });
+
             modelBuilder.Entity("DotNetCrudWebApi.Models.Poll", b =>
                 {
                     b.Navigation("PollInstances");
+
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Question", b =>
