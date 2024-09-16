@@ -90,6 +90,9 @@ namespace DotNetCrudWebApi.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InstanceQuestionId");

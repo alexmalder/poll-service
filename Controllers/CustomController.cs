@@ -8,19 +8,22 @@ namespace DotNetCrudWebApi.Controllers
 {   
     [ApiController]
     [Route("api/[controller]")]
-    public class PollMappingController : ControllerBase
+    public class CustomController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
-        public PollMappingController(AppDbContext AppDbContext, IMapper mapper)
+        public CustomController(AppDbContext AppDbContext, IMapper mapper)
         {
             _appDbContext = AppDbContext;
             _mapper = mapper;
         }
 
-        [HttpGet("/Rich")]
+        [HttpGet("Rich")]
         public async Task<IActionResult> RichList() {
-            var entities = await _appDbContext.Set<Poll>().ToListAsync();
+            var entities = await _appDbContext.Instances
+                .Include("Poll")
+                .Where(e => e.PollId == 1)
+                .ToListAsync();
             return Ok(entities);
         }
     }

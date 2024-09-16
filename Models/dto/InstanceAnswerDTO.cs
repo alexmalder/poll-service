@@ -4,6 +4,7 @@ namespace DotNetCrudWebApi.Models
 {
     public class InstanceAnswerDTO : DTOBase
     {
-        public long? AnswerId { get; set; }
+        public long? InstanceQuestionId { get; set; }
+        public string? Text { get; set; }
     }
 }
