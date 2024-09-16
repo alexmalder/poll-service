@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DotNetCrudWebApi.Data;
 using DotNetCrudWebApi.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
