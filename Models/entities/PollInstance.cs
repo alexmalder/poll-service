@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace DotNetCrudWebApi.Models
 {
-    public class PollInstance
+    public class PollInstance : EntityBase
     {
-        [Key]
-        public int Id { get; set; }
         public required Poll Poll { get; set; }
+        [ForeignKey("PollId")]
+        public long? PollId { get; set; }
     }
 }
