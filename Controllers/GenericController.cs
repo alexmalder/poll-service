@@ -4,11 +4,13 @@ using DotNetCrudWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace GenericCrudApi.Controllers
+namespace DotNetCrudWebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CrudControllerBase<TEntity, TDTO>: ControllerBase where TEntity: EntityBase
+    public class CrudControllerBase<TEntity, TDTO>: ControllerBase 
+    where TEntity: EntityBase
+    where TDTO: DTOBase
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;

@@ -1,8 +1,7 @@
 namespace DotNetCrudWebApi.Models
 {
-    public class QuestionDTO
+    public class QuestionDTO : DTOBase
     {
         public string? Title { get; set; }
-        public DateTime CreationDate { get; set; }
     }
 }
