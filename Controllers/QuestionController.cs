@@ -1,4 +1,5 @@
-﻿using DotNetCrudWebApi.Data;
+﻿using AutoMapper;
+using DotNetCrudWebApi.Data;
 using DotNetCrudWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,29 +12,23 @@ namespace DotNetCrudWebApi.Controllers
     public class QuestionsController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public QuestionsController(AppDbContext AppDbContext)
+        public QuestionsController(AppDbContext AppDbContext, IMapper mapper)
         {
             _appDbContext = AppDbContext;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Question>>> GetQuestions()
         {
-            if (_appDbContext.Questions == null)
-            {
-                return NotFound();
-            }
             return await _appDbContext.Questions.ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Question>> GetQuestion(int id)
         {
-            if (_appDbContext.Questions is null)
-            {
-                return NotFound();
-            }
             var question = await _appDbContext.Questions.FindAsync(id);
             if (question is null)
             {
@@ -43,8 +38,9 @@ namespace DotNetCrudWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Question>> PostQuestion(Question question)
+        public async Task<ActionResult<Question>> PostQuestion(QuestionDTO questionDTO)
         {
+            Question question = _mapper.Map<Question>(questionDTO);
             _appDbContext.Questions.Add(question);
             await _appDbContext.SaveChangesAsync();
             return CreatedAtAction(nameof(GetQuestion), new { id = question.Id }, question);
@@ -84,10 +80,6 @@ namespace DotNetCrudWebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Question>> DeleteQuestion(int id)
         {
-            if (_appDbContext.Questions is null)
-            {
-                return NotFound();
-            }
             var question = await _appDbContext.Questions.FindAsync(id);
             if (question is null)
             {
