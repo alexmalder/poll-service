@@ -3,6 +3,7 @@ using System;
 using DotNetCrudWebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotNetCrudWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240916141735_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +88,7 @@ namespace DotNetCrudWebApi.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("PollId")
+                    b.Property<long>("PollId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -133,7 +136,9 @@ namespace DotNetCrudWebApi.Migrations
                 {
                     b.HasOne("DotNetCrudWebApi.Models.Poll", "Poll")
                         .WithMany("PollInstances")
-                        .HasForeignKey("PollId");
+                        .HasForeignKey("PollId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Poll");
                 });

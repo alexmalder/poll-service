@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DotNetCrudWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240916120859_init")]
-    partial class init
+    [Migration("20240916142023_fix-pollid")]
+    partial class fixpollid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace DotNetCrudWebApi.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("QuestionId")
+                    b.Property<long?>("QuestionId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Title")
@@ -54,13 +54,16 @@ namespace DotNetCrudWebApi.Migrations
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Poll", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
@@ -73,14 +76,20 @@ namespace DotNetCrudWebApi.Migrations
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.PollInstance", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("PollId")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("PollId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -103,8 +112,8 @@ namespace DotNetCrudWebApi.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("PollId")
-                        .HasColumnType("integer");
+                    b.Property<long?>("PollId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
@@ -118,22 +127,16 @@ namespace DotNetCrudWebApi.Migrations
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Answer", b =>
                 {
-                    b.HasOne("DotNetCrudWebApi.Models.Question", "Question")
+                    b.HasOne("DotNetCrudWebApi.Models.Question", null)
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
+                        .HasForeignKey("QuestionId");
                 });
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.PollInstance", b =>
                 {
                     b.HasOne("DotNetCrudWebApi.Models.Poll", "Poll")
                         .WithMany("PollInstances")
-                        .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PollId");
 
                     b.Navigation("Poll");
                 });

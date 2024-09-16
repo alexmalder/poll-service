@@ -10,7 +10,6 @@ namespace DotNetCrudWebApi.Controllers
     {
         public QuestionController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
         {
-            
         }
     }
 
@@ -18,7 +17,20 @@ namespace DotNetCrudWebApi.Controllers
     {
         public AnswerController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
         {
-        
+        }
+    }
+
+    public class PollController : CrudControllerBase<Poll, PollDTO>
+    {
+        public PollController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
+        {
+        }
+    }
+
+    public class PollInstanceController : CrudControllerBase<PollInstance, PollInstanceDTO>
+    {
+        public PollInstanceController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
+        {
         }
     }
 }
