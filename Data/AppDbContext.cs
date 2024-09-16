@@ -9,6 +9,9 @@ namespace DotNetCrudWebApi.Data
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Poll> Polls { get; set; }
         public DbSet<PollInstance> PollInstances { get; set; }
+        public DbSet<PollInstanceQuestion> PollInstanceQuestions { get; set; }
+        public DbSet<PollInstanceAnswer> PollInstanceAnswers { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(@"Host=localhost;Username=alexmalder;Password=alexmalder;Database=alexmalder");
     }
