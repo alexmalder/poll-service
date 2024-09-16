@@ -46,12 +46,13 @@ namespace DotNetCrudWebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Question>> PutQuestion(int id, Question question)
+        public async Task<ActionResult<Question>> PutQuestion(int id, QuestionDTO questionDTO)
         {
-            if (id != question.Id)
+            if (!QuestionExists(id))
             {
-                return BadRequest();
+                return NotFound();
             }
+            Question question = _mapper.Map<Question>(questionDTO);
             _appDbContext.Entry(question).State = EntityState.Modified;
             try
             {
@@ -59,14 +60,7 @@ namespace DotNetCrudWebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!QuestionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
             return NoContent();
         }
