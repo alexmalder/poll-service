@@ -49,29 +49,7 @@ namespace DotNetCrudWebApi.Migrations
                     b.ToTable("Answers");
                 });
 
-            modelBuilder.Entity("DotNetCrudWebApi.Models.Poll", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("ModificationDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Polls");
-                });
-
-            modelBuilder.Entity("DotNetCrudWebApi.Models.PollInstance", b =>
+            modelBuilder.Entity("DotNetCrudWebApi.Models.Instance", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,7 +70,87 @@ namespace DotNetCrudWebApi.Migrations
 
                     b.HasIndex("PollId");
 
-                    b.ToTable("PollInstances");
+                    b.ToTable("Instances");
+                });
+
+            modelBuilder.Entity("DotNetCrudWebApi.Models.InstanceAnswer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("InstanceQuestionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstanceQuestionId");
+
+                    b.ToTable("InstanceAnswers");
+                });
+
+            modelBuilder.Entity("DotNetCrudWebApi.Models.InstanceQuestion", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("InstanceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("PollId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("QuestionId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstanceId");
+
+                    b.HasIndex("PollId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("InstanceQuestions");
+                });
+
+            modelBuilder.Entity("DotNetCrudWebApi.Models.Poll", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ModificationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Polls");
                 });
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Question", b =>
@@ -129,13 +187,45 @@ namespace DotNetCrudWebApi.Migrations
                         .HasForeignKey("QuestionId");
                 });
 
-            modelBuilder.Entity("DotNetCrudWebApi.Models.PollInstance", b =>
+            modelBuilder.Entity("DotNetCrudWebApi.Models.Instance", b =>
                 {
                     b.HasOne("DotNetCrudWebApi.Models.Poll", "Poll")
-                        .WithMany("PollInstances")
+                        .WithMany("Instances")
                         .HasForeignKey("PollId");
 
                     b.Navigation("Poll");
+                });
+
+            modelBuilder.Entity("DotNetCrudWebApi.Models.InstanceAnswer", b =>
+                {
+                    b.HasOne("DotNetCrudWebApi.Models.InstanceQuestion", null)
+                        .WithMany("InstanceAnswers")
+                        .HasForeignKey("InstanceQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DotNetCrudWebApi.Models.InstanceQuestion", b =>
+                {
+                    b.HasOne("DotNetCrudWebApi.Models.Instance", "Instance")
+                        .WithMany("InstanceQuestions")
+                        .HasForeignKey("InstanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DotNetCrudWebApi.Models.Poll", null)
+                        .WithMany("InstanceQuestion")
+                        .HasForeignKey("PollId");
+
+                    b.HasOne("DotNetCrudWebApi.Models.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Instance");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Question", b =>
@@ -145,9 +235,21 @@ namespace DotNetCrudWebApi.Migrations
                         .HasForeignKey("PollId");
                 });
 
+            modelBuilder.Entity("DotNetCrudWebApi.Models.Instance", b =>
+                {
+                    b.Navigation("InstanceQuestions");
+                });
+
+            modelBuilder.Entity("DotNetCrudWebApi.Models.InstanceQuestion", b =>
+                {
+                    b.Navigation("InstanceAnswers");
+                });
+
             modelBuilder.Entity("DotNetCrudWebApi.Models.Poll", b =>
                 {
-                    b.Navigation("PollInstances");
+                    b.Navigation("InstanceQuestion");
+
+                    b.Navigation("Instances");
 
                     b.Navigation("Questions");
                 });
