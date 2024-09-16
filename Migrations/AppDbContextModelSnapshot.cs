@@ -24,13 +24,16 @@ namespace DotNetCrudWebApi.Migrations
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Answer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("QuestionId")

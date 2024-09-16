@@ -8,6 +8,7 @@ namespace DotNetCrudWebApi.Config {
         public MyAutoMapper()
         {
             CreateMap<QuestionDTO, Question>();
+            CreateMap<AnswerDTO, Answer>();
         }
     }
 }

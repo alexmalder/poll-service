@@ -10,6 +10,14 @@ namespace DotNetCrudWebApi.Controllers
     {
         public QuestionController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
         {
+            
+        }
+    }
+
+    public class AnswerController : CrudControllerBase<Answer, AnswerDTO>
+    {
+        public AnswerController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
+        {
         
         }
     }
