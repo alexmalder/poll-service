@@ -10,7 +10,7 @@ namespace DotNetCrudWebApi.Models
     {
         public Question Question { get; set; } = null!;
         public long QuestionId { get; set; }
-        public Instance Instance { get; set; } = null!;
+        //public Instance Instance { get; set; } = null!;
         public long InstanceId { get; set; }
         public ICollection<InstanceAnswer> InstanceAnswers { get; } = [];
     }

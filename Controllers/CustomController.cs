@@ -18,11 +18,11 @@ namespace DotNetCrudWebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("Rich")]
+        [HttpGet("RichSelect")]
         public async Task<IActionResult> RichList() {
             var entities = await _appDbContext.Instances
-                .Include("Poll")
-                .Where(e => e.PollId == 1)
+                .Include(c => c.InstanceQuestions)
+                .ThenInclude(c => c.Question)
                 .ToListAsync();
             return Ok(entities);
         }

@@ -117,17 +117,12 @@ namespace DotNetCrudWebApi.Migrations
                     b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("PollId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InstanceId");
-
-                    b.HasIndex("PollId");
 
                     b.HasIndex("QuestionId");
 
@@ -193,7 +188,7 @@ namespace DotNetCrudWebApi.Migrations
             modelBuilder.Entity("DotNetCrudWebApi.Models.Instance", b =>
                 {
                     b.HasOne("DotNetCrudWebApi.Models.Poll", "Poll")
-                        .WithMany("Instances")
+                        .WithMany()
                         .HasForeignKey("PollId");
 
                     b.Navigation("Poll");
@@ -215,10 +210,6 @@ namespace DotNetCrudWebApi.Migrations
                         .HasForeignKey("InstanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("DotNetCrudWebApi.Models.Poll", null)
-                        .WithMany("InstanceQuestion")
-                        .HasForeignKey("PollId");
 
                     b.HasOne("DotNetCrudWebApi.Models.Question", "Question")
                         .WithMany()
@@ -250,10 +241,6 @@ namespace DotNetCrudWebApi.Migrations
 
             modelBuilder.Entity("DotNetCrudWebApi.Models.Poll", b =>
                 {
-                    b.Navigation("InstanceQuestion");
-
-                    b.Navigation("Instances");
-
                     b.Navigation("Questions");
                 });
 
