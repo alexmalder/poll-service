@@ -8,5 +8,6 @@ namespace DotNetCrudWebApi.Models
         public string? Title { get; set; }
         public long? QuestionId { get; set; }
         //public Question Question { get; set; } = null!;
+        public ICollection<InstanceAnswer> InstanceAnswers { get; } = [];
     }
 }

@@ -10,6 +10,7 @@ namespace DotNetCrudWebApi.Models
     {
         public required InstanceQuestion InstanceQuestion;
         public long InstanceQuestionId { get; set; }
+        public long AnswerId { get; set; }
         public string? Text { get; set; }
     }
 }

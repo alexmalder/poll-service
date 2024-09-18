@@ -18,8 +18,8 @@ namespace DotNetCrudWebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("RichSelect")]
-        public async Task<IActionResult> RichList() {
+        [HttpGet("InstancesWithQuestions")]
+        public async Task<IActionResult> GetInstancesWithQuestions() {
             var entities = await _appDbContext.Instances
                 .Include(c => c.InstanceQuestions)
                 .ThenInclude(c => c.Question)
