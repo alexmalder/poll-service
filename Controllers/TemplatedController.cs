@@ -12,24 +12,33 @@ namespace DotNetCrudWebApi.Controllers
         {
         }
     }
-
     public class AnswerController : CrudControllerBase<Answer, AnswerDTO>
     {
         public AnswerController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
         {
         }
     }
-
     public class PollController : CrudControllerBase<Poll, PollDTO>
     {
         public PollController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
         {
         }
     }
-
-    public class PollInstanceController : CrudControllerBase<PollInstance, PollInstanceDTO>
+    public class InstanceController : CrudControllerBase<Instance, InstanceDTO>
     {
-        public PollInstanceController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
+        public InstanceController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
+        {
+        }
+    }
+    public class InstanceQuestionController : CrudControllerBase<InstanceQuestion, InstanceQuestionDTO>
+    {
+        public InstanceQuestionController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
+        {
+        }
+    }
+    public class InstanceAnswerController : CrudControllerBase<InstanceAnswer, InstanceAnswerDTO>
+    {
+        public InstanceAnswerController(AppDbContext AppDbContext, IMapper mapper) : base(AppDbContext, mapper)
         {
         }
     }

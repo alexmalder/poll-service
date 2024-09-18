@@ -484,4 +484,4 @@ $RECYCLE.BIN/
 *.swp
 
 # Ignore migrations in dev
-Migrations
+/Migrations/*

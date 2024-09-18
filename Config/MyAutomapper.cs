@@ -10,7 +10,9 @@ namespace DotNetCrudWebApi.Config {
             CreateMap<QuestionDTO, Question>();
             CreateMap<AnswerDTO, Answer>();
             CreateMap<PollDTO, Poll>();
-            CreateMap<PollInstanceDTO, PollInstance>();
+            CreateMap<InstanceDTO, Instance>();
+            CreateMap<InstanceQuestionDTO, InstanceQuestion>();
+            CreateMap<InstanceAnswerDTO, InstanceAnswer>();
         }
     }
 }

@@ -4,10 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace DotNetCrudWebApi.Models
 {
-    public class PollInstance : EntityBase
+    public class Instance : EntityBase
     {
         public required Poll Poll { get; set; }
-        [ForeignKey("PollId")]
         public long? PollId { get; set; }
+        public ICollection<InstanceQuestion> InstanceQuestions { get; } = [];
+        
     }
 }
