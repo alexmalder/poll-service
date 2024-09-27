@@ -1,6 +1,7 @@
 using AutoMapper;
 using DotNetCrudWebApi.Data;
 using DotNetCrudWebApi.Models;
+using LdapForNet;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,18 @@ namespace DotNetCrudWebApi.Controllers
                 .ThenInclude(c => c.Question)
                 .ToListAsync();
             return Ok(entities);
+        }
+
+        [HttpPost("SignIn")]
+        public async Task<IActionResult> LdapTest(SignInDTO signIn) {
+            using (var cn = new LdapConnection())
+            {
+                // connect use hostname and port
+                cn.Connect(new Uri("ldap://localhost:1389"));
+                cn.Bind(LdapForNet.Native.Native.LdapAuthMechanism.SIMPLE, string.Format("cn={0},ou=users,dc=example,dc=ru", signIn.Username), signIn.Password);
+                var entries = cn.Search("dc=example,dc=ru","(objectClass=*)");
+                return Ok(entries);
+            }
         }
     }
 }

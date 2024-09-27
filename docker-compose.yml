@@ -1,5 +1,4 @@
 ---
-version: '2'
 services:
   openldap:
     image: bitnami/openldap:2.6
@@ -11,8 +10,8 @@ services:
       LDAP_USERS: "user01,user02"
       LDAP_PASSWORDS: "password1,password2"
     ports:
-      - 1389:389
-      - 1686:686
+      - 1389:1389
+      - 1686:1686
     volumes:
       - openldap:/bitnami/openldap
   lam:
