@@ -1,4 +1,5 @@
 using AutoMapper;
+using DotNetCrudWebApi.Repositories;
 using DotNetCrudWebApi.Data;
 using DotNetCrudWebApi.Models;
 using LdapForNet;
@@ -6,17 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetCrudWebApi.Controllers
-{   
+{
     [ApiController]
     [Route("api/[controller]")]
     public class CustomController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
-        public CustomController(AppDbContext AppDbContext, IMapper mapper)
+        private readonly ILdapRepository _ldapRepository;
+        public CustomController(AppDbContext AppDbContext, IMapper mapper, ILdapRepository ldapRepository)
         {
             _appDbContext = AppDbContext;
             _mapper = mapper;
+            _ldapRepository = ldapRepository;
         }
 
         [HttpGet("InstancesWithQuestions")]
@@ -31,15 +34,8 @@ namespace DotNetCrudWebApi.Controllers
         [HttpPost("SignIn")]
         public IActionResult LdapTest(SignInDTO signIn)
         {
-            var cn = new LdapConnection();
-            cn.Connect(new Uri("ldap://localhost:1389"));
-            cn.Bind(
-                LdapForNet.Native.Native.LdapAuthMechanism.SIMPLE,
-                string.Format("cn={0},ou=users,dc=example,dc=ru", signIn.Username),
-                signIn.Password
-            );
-            var whoami = cn.WhoAmI;
-            return Ok(whoami);
+            var ldapEntry = _ldapRepository.GetWhoAmI(signIn);
+            return Ok(ldapEntry);
         }
     }
 }
