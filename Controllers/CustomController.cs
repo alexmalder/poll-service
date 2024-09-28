@@ -29,15 +29,17 @@ namespace DotNetCrudWebApi.Controllers
         }
 
         [HttpPost("SignIn")]
-        public async Task<IActionResult> LdapTest(SignInDTO signIn) {
-            using (var cn = new LdapConnection())
-            {
-                // connect use hostname and port
-                cn.Connect(new Uri("ldap://localhost:1389"));
-                cn.Bind(LdapForNet.Native.Native.LdapAuthMechanism.SIMPLE, string.Format("cn={0},ou=users,dc=example,dc=ru", signIn.Username), signIn.Password);
-                var entries = cn.Search("dc=example,dc=ru","(objectClass=*)");
-                return Ok(entries);
-            }
+        public IActionResult LdapTest(SignInDTO signIn)
+        {
+            var cn = new LdapConnection();
+            cn.Connect(new Uri("ldap://localhost:1389"));
+            cn.Bind(
+                LdapForNet.Native.Native.LdapAuthMechanism.SIMPLE,
+                string.Format("cn={0},ou=users,dc=example,dc=ru", signIn.Username),
+                signIn.Password
+            );
+            var whoami = cn.WhoAmI;
+            return Ok(whoami);
         }
     }
 }
