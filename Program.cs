@@ -1,5 +1,6 @@
 using DotNetCrudWebApi.Data;
 using DotNetCrudWebApi.Config;
+using DotNetCrudWebApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MyAutoMapper));
+builder.Services.AddScoped<ILdapRepository, LdapRepository>();
 
 var app = builder.Build();
 
